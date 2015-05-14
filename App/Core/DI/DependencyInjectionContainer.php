@@ -3,6 +3,7 @@
 
 namespace App\Core\DI;
 
+use App\Core\Request\RequestHandler;
 use App\Core\Routing\Router;
 use App\Core\Runtime;
 
@@ -24,7 +25,11 @@ abstract class DependencyInjectionContainer {
 		return new Router($this->getTopInstance());
 	}
 
+	public function getRequestHandler() {
+		return new RequestHandler();
+	}
+
 	public function getRuntime() {
-		return new Runtime($this->getTopInstance());
+		return new Runtime($this->getTopInstance(), $this->getRequestHandler());
 	}
 }

@@ -109,18 +109,6 @@ class Route {
 	}
 
 	/**
-	 * Invokes this route's controller's action
-	 *
-	 * @param $path
-	 */
-	public function invokeController($path) {
-		$reflection = new \ReflectionClass($this->controller);
-		$controller = $reflection->newInstance();
-
-		call_user_func_array([$controller, $this->getAction()], $this->parseParameters($path));
-	}
-
-	/**
 	 * @return mixed
 	 */
 	public function getMethod()

@@ -5,6 +5,9 @@ namespace App\Core;
 
 
 use App\Core\DI\DependencyInjectionContainer;
+use App\Core\Request\Request;
+use App\Core\Request\RequestHandler;
+use App\Core\Routing\Router;
 
 /**
  * Class that instantiates everything necessary for runtime
@@ -13,6 +16,11 @@ use App\Core\DI\DependencyInjectionContainer;
  * @package App\Core
  */
 class Runtime {
+
+	/**
+	 * @var Router
+	 */
+	protected $router;
 
 	/**
 	 * @var DependencyInjectionContainer
@@ -28,9 +36,19 @@ class Runtime {
 	 * @var array
 	 */
 	private $options;
+	/**
+	 * @var RequestHandler
+	 */
+	private $requestHandler;
 
-	public function __construct(DependencyInjectionContainer $dic) {
+	/**
+	 * @var Request
+	 */
+	private $requestInstance;
+
+	public function __construct(DependencyInjectionContainer $dic, RequestHandler $rh) {
 		$this->dic = $dic;
+		$this->requestHandler = $rh;
 	}
 
 	/**
@@ -45,6 +63,25 @@ class Runtime {
 		$this->options = $options;
 
 		$this->initializeRouter();
+		$this->requestHandler->handle($this->getRequestInstance(), $this->router->getRoute($this->getRequestInstance()));
+	}
+
+	/**
+	 * Returns an instance of Request
+	 *
+	 * @return Request
+	 */
+	public function getRequestInstance() {
+		if($this->requestInstance !== null)
+			return $this->requestInstance;
+
+		$request = new Request();
+		$request->path = $_SERVER['REQUEST_URI'];
+		$request->method = $_SERVER['REQUEST_METHOD'];
+
+		$this->requestInstance = $request;
+
+		return $this->requestInstance;
 	}
 
 	public function initializeRouter() {
@@ -53,6 +90,6 @@ class Runtime {
 		$router->setRouteFile($this->route_file);
 		$router->initialize();
 
-		$router->handle($_SERVER['REQUEST_URI']);
+		$this->router = $router;
 	}
 }

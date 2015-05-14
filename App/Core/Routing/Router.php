@@ -5,6 +5,7 @@ namespace App\Core\Routing;
 
 
 use App\Core\DI\DependencyInjectionContainer;
+use App\Core\Request\Request;
 use app\di\DIContainer;
 
 /**
@@ -76,17 +77,19 @@ class Router {
 	}
 
 	/**
-	 * Handle request, call controller's action
+	 * Returns a matching route
 	 *
-	 *
-	 * @param $path
+	 * @param Request $request
+	 * @return Route
 	 */
-	public function handle($path) {
+	public function getRoute(Request $request) {
 		foreach($this->routes->getRoutes() as $route) {
-			if($route->match($path)) {
-				$route->invokeController($path);
+			if($route->match($request->getPath())) {
+				return $route;
 				break;
 			}
 		}
+
+		return null;
 	}
 }
