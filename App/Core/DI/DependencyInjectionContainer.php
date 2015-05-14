@@ -4,6 +4,7 @@
 namespace App\Core\DI;
 
 use App\Core\Routing\Router;
+use App\Core\Runtime;
 
 /**
  * System level dependencies and core services
@@ -21,5 +22,9 @@ abstract class DependencyInjectionContainer {
 
 	public function getRouter() {
 		return new Router($this->getTopInstance());
+	}
+
+	public function getRuntime() {
+		return new Runtime($this->getTopInstance());
 	}
 }
