@@ -6,11 +6,10 @@ namespace App\Controllers;
 
 use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
-use App\Core\Templating\View;
 
 class HomeController {
 	public function index() {
-		return new ViewResponse("<h1>waaat</h1>\n");
+		return new ViewResponse("<h1>what</h1>\n");
 	}
 
 	public function foo() {
