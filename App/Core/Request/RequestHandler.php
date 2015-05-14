@@ -5,6 +5,7 @@ namespace App\Core\Request;
 
 
 use App\Core\DI\DependencyInjectionContainer;
+use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
 use App\Core\Routing\Route;
 
@@ -24,12 +25,16 @@ class RequestHandler {
 		$controller = $reflection->newInstance();
 
 		/**
-		 * @var $response ViewResponse
+		 * @var $response ViewResponse|TextResponse
 		 */
 		$response = call_user_func_array([$controller, $route->getAction()], $route->parseParameters($request->getPath()));
 
-		$viewResolver = $this->dic->getViewResolver();
-		$html = $viewResolver->getHTML($response->getView());
-		echo $html;
+		if($response instanceof TextResponse) {
+			echo $response->getContents();
+		} else {
+			$viewResolver = $this->dic->getViewResolver();
+			$html = $viewResolver->getHTML($response->getView());
+			echo $html;
+		}
 	}
 }

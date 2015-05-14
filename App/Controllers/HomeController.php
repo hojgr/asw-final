@@ -4,6 +4,7 @@
 namespace App\Controllers;
 
 
+use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
 use App\Core\Templating\View;
 
@@ -17,7 +18,7 @@ class HomeController {
 	}
 
 	public function fooPost() {
-		return new ViewResponse("Home/fooPost");
+		return new TextResponse("Text response!");
 	}
 
 	public function bar($in) {
