@@ -1,3 +1,55 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
 body {
-    background: grey;
+    background: url('../images/bg.jpg');
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+
+a {
+    color: white;
+}
+
+.header {
+    height: 165px;
+    width: 100%;
+    background: url('../images/header.jpg');
+}
+
+.center {
+    width: 1080px;
+    margin: 0 auto;
+}
+
+.header .logo {
+    position: relative;
+    width: 700px;
+    height: 70px;
+    background: url('../images/logo.png');
+    left: 10px;
+    top: 55px;
+    float: left;
+}
+
+.user_panel {
+    width: 250px;
+    height: 100px;
+    position: relative;
+    top: 40px;
+    right: 10px;
+    background: url('../images/user_bg.png');
+    float: right;
+    -webkit-border-radius: 20px;
+    -moz-border-radius: 20px;
+    border-radius: 20px;
+    color: white;
+}
+
+.user_panel_center {
+    font-size: 17px;
+    position: relative;
+    top: 37px;
+    left: 15px;
 }

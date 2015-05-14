@@ -6,9 +6,17 @@
 </head>
 
 <body>
-	<h1>ASW layout</h1>
-	<hr />
+	<div class="header">
+		<div class="center">
+			<div class="logo"></div>
+			<div class="user_panel">
+				<div class="user_panel_center">
+					<a href="#">Prihlasit se</a>
+					|
+					<a href="#">Zaregistrovat se</a>
+				</div>
+			</div>
+		</div>
+	</div>
 	[@contents]
-	<hr />
-	<h1>ASW footer</h1>
 </body>
