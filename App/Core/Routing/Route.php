@@ -31,6 +31,8 @@ class Route {
 	 */
 	public function match(Request $request) {
 		// first compare request methods
+		if($this->method !== $request->method)
+			return false;
 
 		if(strpos($this->path, "*") === FALSE) {
 			return $this->simpleMatch($request->getPath());
