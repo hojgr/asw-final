@@ -16,7 +16,7 @@ class Route {
 	public function __construct($method, $path, $controller, $action) {
 		$this->method = $method;
 		$this->path = $path;
-		$this->pathSegments = explode("/", $this->path);
+		$this->pathSegments = $this->pathToSegments($this->path);
 		$this->controller = $controller;
 		$this->action = $action;
 	}
@@ -36,6 +36,10 @@ class Route {
 		}
 	}
 
+	public function pathToSegments($path) {
+		return explode("/", $path);
+	}
+
 	/**
 	 * Performs $callback on each segment of path,
 	 * returns all returns of all callback calls
@@ -47,6 +51,7 @@ class Route {
 	public function eachSegment($path, $callback) {
 		$collector = [];
 		$requestSegments = explode("/", $path);
+
 		foreach($requestSegments as $index => $segment) {
 			$return = $callback($this->pathSegments[$index], $segment);
 			if($return !== null)
@@ -79,18 +84,17 @@ class Route {
 	 * @return bool
 	 */
 	public function advancedMatch($path) {
-		$collected = $this->eachSegment($path, function($route, $request) {
-			if($route !== "*") {
+		$requestSegments = explode("/", $path);
+		foreach($requestSegments as $index => $segment) {
+			if($this->pathSegments[$index] !== "*") {
 				// if a segment doesn't match, return false right away
-				if ($route !== $request)
+				if ($this->pathSegments[$index] !== $segment)
 					return false;
 				// otherwise continue to next segment
 			}
+		}
 
-			return true;
-		});
-
-		return !(in_array(false, $collected));
+		return true;
 	}
 
 	/**
@@ -100,12 +104,15 @@ class Route {
 	 * @return array
 	 */
 	public function parseParameters($path) {
-		return $this->eachSegment($path, function($route, $request) {
-			if($route === "*") {
-				return $request;
-			} else
-				return null;
-		});
+		$collector = [];
+		$requestSegments = explode("/", $path);
+		foreach($requestSegments as $index => $segment) {
+			if($this->pathSegments[$index] === "*") {
+				$collector[] = urldecode($segment);
+			}
+		}
+
+		return $collector;
 	}
 
 	/**
