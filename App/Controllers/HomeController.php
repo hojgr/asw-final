@@ -4,22 +4,23 @@
 namespace App\Controllers;
 
 
-use App\Core\Response\Response;
+use App\Core\Response\ViewResponse;
+use App\Core\Templating\View;
 
 class HomeController {
 	public function index() {
-		return new Response("<h1>waaat</h1>\n");
+		return new ViewResponse("<h1>waaat</h1>\n");
 	}
 
 	public function foo() {
-		return new Response("<h1>foo!!(get) " . $_SERVER['REQUEST_METHOD'] . "</h1>\n");
+		return new ViewResponse("Home/foo", ["test" => "one two three four"]);
 	}
 
 	public function fooPost() {
-		return new Response("FooPost!\n");
+		return new ViewResponse("Home/fooPost");
 	}
 
 	public function bar($in) {
-		return new Response("<h1>Bar $in!!!</h1>\n");
+		return new ViewResponse("<h1>Bar $in!!!</h1>\n");
 	}
 }

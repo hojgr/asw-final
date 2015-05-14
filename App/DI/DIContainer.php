@@ -32,4 +32,8 @@ class DIContainer extends DependencyInjectionContainer {
 	{
 		return $this;
 	}
+
+	public function getTemplateBasePath() {
+		return APP_PATH . "/Templates/";
+	}
 }

@@ -6,6 +6,7 @@ namespace App\Core\DI;
 use App\Core\Request\RequestHandler;
 use App\Core\Routing\Router;
 use App\Core\Runtime;
+use App\Core\Templating\ViewResolver;
 
 /**
  * System level dependencies and core services
@@ -21,12 +22,23 @@ abstract class DependencyInjectionContainer {
 	 */
 	abstract protected function getTopInstance();
 
+	/**
+	 * Returns a path to template folders
+	 *
+	 * @return mixed
+	 */
+	abstract public function getTemplateBasePath();
+
 	public function getRouter() {
 		return new Router($this->getTopInstance());
 	}
 
+	public function getViewResolver() {
+		return new ViewResolver($this);
+	}
+
 	public function getRequestHandler() {
-		return new RequestHandler();
+		return new RequestHandler($this);
 	}
 
 	public function getRuntime() {
