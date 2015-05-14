@@ -6,6 +6,12 @@ namespace App\Core;
 
 use App\Core\DI\DependencyInjectionContainer;
 
+/**
+ * Class that instantiates everything necessary for runtime
+ *
+ * Class Runtime
+ * @package App\Core
+ */
 class Runtime {
 
 	/**

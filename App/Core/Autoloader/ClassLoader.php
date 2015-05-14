@@ -3,7 +3,6 @@
 
 namespace App\Core\Autoloader;
 
-
 class ClassLoader
 {
 	private $_fileExtension = '.php';

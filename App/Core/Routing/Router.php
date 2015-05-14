@@ -7,6 +7,12 @@ namespace App\Core\Routing;
 use App\Core\DI\DependencyInjectionContainer;
 use app\di\DIContainer;
 
+/**
+ * Routes requests
+ *
+ * Class Router
+ * @package App\Core\Routing
+ */
 class Router {
 
 	/**
@@ -28,6 +34,10 @@ class Router {
 		$this->di = $di;
 	}
 
+	/**
+	 * @param string $path
+	 * @return void
+	 */
 	public function setRouteFile($path) {
 		$this->routeFile = $path;
 	}
@@ -56,11 +66,21 @@ class Router {
 		return $routeSuite;
 	}
 
+	/**
+	 * Initializes
+	 * @return void
+	 */
 	public function initialize() {
 		$this->routes = $this->readRoutes();
 
 	}
 
+	/**
+	 * Handle request, call controller's action
+	 *
+	 *
+	 * @param $path
+	 */
 	public function handle($path) {
 		foreach($this->routes->getRoutes() as $route) {
 			if($route->match($path)) {

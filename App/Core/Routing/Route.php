@@ -3,7 +3,10 @@
 
 namespace App\Core\Routing;
 
-
+/**
+ * Class Route
+ * @package App\Core\Routing
+ */
 class Route {
 	private $method;
 	private $path;
@@ -18,6 +21,13 @@ class Route {
 		$this->action = $action;
 	}
 
+	/**
+	 * Checks all routes and returns if given
+	 * path matches this route's path
+	 *
+	 * @param $path
+	 * @return bool
+	 */
 	public function match($path) {
 		if(strpos($this->path, "*") === FALSE) {
 			return $this->simpleMatch($path);
@@ -26,14 +36,14 @@ class Route {
 		}
 	}
 
-	public function simpleMatch($path) {
-		if($this->path == $path) {
-			return true;
-		}
-
-		return false;
-	}
-
+	/**
+	 * Performs $callback on each segment of path,
+	 * returns all returns of all callback calls
+	 *
+	 * @param $path
+	 * @param $callback
+	 * @return array
+	 */
 	public function eachSegment($path, $callback) {
 		$collector = [];
 		$requestSegments = explode("/", $path);
@@ -45,6 +55,29 @@ class Route {
 		return $collector;
 	}
 
+	/**
+	 * Performs simple match,
+	 * matching strings exactly
+	 *
+	 * @param $path
+	 * @return bool
+	 */
+	public function simpleMatch($path) {
+		if($this->path == $path) {
+			return true;
+		}
+
+		return false;
+	}
+
+	/**
+	 * Performs advanced match,
+	 * matching route with wildcards, too
+	 * (slower than simple match)
+	 *
+	 * @param $path
+	 * @return bool
+	 */
 	public function advancedMatch($path) {
 		$collected = $this->eachSegment($path, function($route, $request) {
 			if($route !== "*") {
@@ -60,6 +93,12 @@ class Route {
 		return !(in_array(false, $collected));
 	}
 
+	/**
+	 * Returns segments matching this route's wildcard
+	 *
+	 * @param $path
+	 * @return array
+	 */
 	public function parseParameters($path) {
 		return $this->eachSegment($path, function($route, $request) {
 			if($route === "*") {
@@ -69,6 +108,11 @@ class Route {
 		});
 	}
 
+	/**
+	 * Invokes this route's controller's action
+	 *
+	 * @param $path
+	 */
 	public function invokeController($path) {
 		$reflection = new \ReflectionClass($this->controller);
 		$controller = $reflection->newInstance();
