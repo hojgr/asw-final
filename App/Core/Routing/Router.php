@@ -84,7 +84,7 @@ class Router {
 	 */
 	public function getRoute(Request $request) {
 		foreach($this->routes->getRoutes() as $route) {
-			if($route->match($request->getPath())) {
+			if($route->match($request)) {
 				return $route;
 				break;
 			}

@@ -2,6 +2,7 @@
 
 
 namespace App\Core\Routing;
+use App\Core\Request\Request;
 
 /**
  * Class Route
@@ -25,14 +26,16 @@ class Route {
 	 * Checks all routes and returns if given
 	 * path matches this route's path
 	 *
-	 * @param $path
+	 * @param Request $request
 	 * @return bool
 	 */
-	public function match($path) {
+	public function match(Request $request) {
+		// first compare request methods
+
 		if(strpos($this->path, "*") === FALSE) {
-			return $this->simpleMatch($path);
+			return $this->simpleMatch($request->getPath());
 		} else {
-			return $this->advancedMatch($path);
+			return $this->advancedMatch($request->getPath());
 		}
 	}
 
