@@ -4,6 +4,7 @@
 namespace App\Core\Request;
 
 
+use App\Core\Response\Response;
 use App\Core\Routing\Route;
 
 class RequestHandler {
@@ -11,6 +12,11 @@ class RequestHandler {
 		$reflection = new \ReflectionClass($route->getController());
 		$controller = $reflection->newInstance();
 
-		call_user_func_array([$controller, $route->getAction()], $route->parseParameters($request->getPath()));
+		/**
+		 * @var $response Response
+		 */
+		$response = call_user_func_array([$controller, $route->getAction()], $route->parseParameters($request->getPath()));
+
+		$response->render();
 	}
 }
