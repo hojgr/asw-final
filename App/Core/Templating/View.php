@@ -48,4 +48,8 @@ class View {
 	{
 		$this->variables = $variables;
 	}
+
+	public function setVariable($k, $v) {
+		$this->variables[$k] = $v;
+	}
 }
