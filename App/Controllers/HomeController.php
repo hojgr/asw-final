@@ -4,10 +4,10 @@
 namespace App\Controllers;
 
 
-use App\Core\Response\TextResponse;
+use App\Core\Controller\Controller;
 use App\Core\Response\ViewResponse;
 
-class HomeController {
+class HomeController extends Controller {
 	public function index() {
 		return new ViewResponse("Home/index");
 	}

@@ -4,10 +4,11 @@
 namespace App\Controllers;
 
 
+use App\Core\Controller\Controller;
 use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
 
-class AccountController {
+class AccountController extends Controller {
 	public function register() {
 		return new ViewResponse("Account/register");
 	}
