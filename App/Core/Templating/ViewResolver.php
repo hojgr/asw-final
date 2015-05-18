@@ -46,6 +46,10 @@ class ViewResolver {
 
 		foreach($variables as $k => $v) {
 			if(is_array($v)) $v = json_encode($v);
+
+			// if not scalar, can't be printed
+			if(!is_scalar($v))
+				continue;
 			$out = str_replace("[@" . $k . "]", $v, $out);
 		}
 

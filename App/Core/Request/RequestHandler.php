@@ -33,7 +33,9 @@ class RequestHandler {
 			echo $response->getContents();
 		} else {
 
-			$response->getView()->setVariable("flashes", []);
+			foreach($controller->viewVariables as $k => $v) {
+				$response->getView()->setVariable($k, $v);
+			}
 
 			$viewResolver = $this->dic->getViewResolver();
 			$html = $viewResolver->getHTML($response->getView());

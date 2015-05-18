@@ -19,12 +19,10 @@
 			</div>
 		</div>
 	</div>
-	<?php if(count($flashes) > 0): ?>
-		<div class="flash flash-error">
-			Message! Lipsom kdkl asld klad asd asd jlasjl dasjdas wkjebh
+	<?php foreach($flashes->getFlashMessages() as $f): ?>
+		<div class="flash flash-<?= $f->getType(); ?>">
+			<?= $f->getText(); ?>
 		</div>
-	<?php endif; ?>
-	<?php echo $a; ?>;
-	<?php echo $b; ?>;
+	<?php endforeach; ?>
 	[@contents]
 </body>
