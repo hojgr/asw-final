@@ -59,7 +59,7 @@ class Router {
 		foreach($contentsSplit as $routeLine) {
 			if(strlen($routeLine) != 0 && $routeLine[0] != "#") {
 				list($method, $path, $handler) = preg_split('/\s+/', $routeLine);
-				list($controller, $action) = explode(":", $handler);
+				list($controller, $action) = explode("::", $handler);
 
 				$route = new Route($method, $path, $controller, $action);
 				$routeSuite->addRoute($route);
