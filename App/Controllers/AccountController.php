@@ -14,7 +14,14 @@ class AccountController extends Controller {
 	}
 
 	public function registerPost() {
-		var_dump($this->_POST);
+		if(!preg_match("/^[a-zA-Z0-9 _\\-]+$/", $this->getPost('username'))) {
+			die("bad username");
+		} else if($this->getPost('password') != $this->getPost("password_again")) {
+			die("passwords dont match");
+		}
+
+		die("registered");
+
 		return new TextResponse("end");
 	}
 }

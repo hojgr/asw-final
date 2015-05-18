@@ -26,4 +26,15 @@ class Controller {
 	private function saveRequestVariables(&$source, &$destination) {
 		$destination = $source;
 	}
+
+
+
+	protected function getPost($key)
+	{
+		return $this->_POST[$key];
+	}
+
+	protected function getGet($key) {
+		return $this->_GET[$key];
+	}
 }
