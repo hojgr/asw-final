@@ -1,4 +1,1 @@
 GET         /                   App\Controllers\HomeController:index
-GET         /foo                App\Controllers\HomeController:foo
-GET         /bar/*              App\Controllers\HomeController:bar
-POST        /foo                App\Controllers\HomeController:fooPost
