@@ -19,5 +19,12 @@
 			</div>
 		</div>
 	</div>
+	<?php if(count($flashes) > 0): ?>
+		<div class="flash flash-error">
+			Message! Lipsom kdkl asld klad asd asd jlasjl dasjdas wkjebh
+		</div>
+	<?php endif; ?>
+	<?php echo $a; ?>;
+	<?php echo $b; ?>;
 	[@contents]
 </body>

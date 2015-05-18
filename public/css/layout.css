@@ -136,3 +136,20 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     margin: 5px 1px 3px 0px;
     border: 1px solid rgba(81, 203, 238, 1);
 }
+
+.flash {
+    height: 30px;
+    line-height: 30px;
+    vertical-align: middle;
+    text-align: center;
+}
+
+.flash-success {
+    color: black;
+    background: #BDECB6;
+}
+
+.flash-error {
+    color: white;
+    background: red;
+}

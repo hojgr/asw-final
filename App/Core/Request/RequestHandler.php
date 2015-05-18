@@ -32,6 +32,9 @@ class RequestHandler {
 		if($response instanceof TextResponse) {
 			echo $response->getContents();
 		} else {
+
+			$response->getView()->setVariable("flashes", []);
+
 			$viewResolver = $this->dic->getViewResolver();
 			$html = $viewResolver->getHTML($response->getView());
 			echo $html;
