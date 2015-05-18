@@ -14,7 +14,7 @@ class AccountController extends Controller {
 	}
 
 	public function registerPost() {
-		var_dump($_POST);
+		var_dump($this->_POST);
 		return new TextResponse("end");
 	}
 }
