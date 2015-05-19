@@ -3,7 +3,7 @@
 	<?php if($user !== null): ?>
 		<div class="post-write">
 			<button id="post" class="chamoiseeBtn generalBtn">Odeslat</button>
-			<textarea id="postContent" placeholder="A post"></textarea>
+			<textarea id="postContent" placeholder="Prispevek"></textarea>
 		</div>
 	<?php endif; ?>
 
