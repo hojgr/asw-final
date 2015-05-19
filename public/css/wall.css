@@ -84,3 +84,27 @@
 .reply_input:-ms-input-placeholder {
     color: darkslategrey;
 }
+
+.post-write {
+    width: 720px;
+    margin: 0 auto;
+}
+
+.post-write textarea {
+    width: 595px;
+    float: right;
+    height: 102px;
+    font-family: "Trebuchet MS", Verdana, sans-serif;
+}
+
+.post-write button {
+    float: left;
+    width: 100px;
+    height: 100px;
+    margin-left: 5px;
+
+    box-shadow: none;
+    -moz-box-shadow: 0 0 0 5px #A0785A, 1px 1px 4px 6px transparent;
+    -webkit-box-shadow: 0 0 0 5px #A0785A, 1px 1px 4px 6px transparent;
+    -o-box-shadow: 0 0 0 5px #A0785A, 1px 1px 4px 6px transparent;
+}

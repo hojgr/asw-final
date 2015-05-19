@@ -26,7 +26,7 @@ class ViewResolver {
 		$template = $this->resolveView($this->templateBasePath . $this->layout);
 		$variables = "";
 
-		$view->setVariable("contents", $action);
+		$template = $this->replaceBlock("contents", $action, $template);
 
 		/**
 		 * Serializes and encodes serialized string into base64
@@ -43,10 +43,14 @@ class ViewResolver {
 		return ob_get_clean();
 	}
 
+	public function replaceBlock($keyword, $contents, $template) {
+		return preg_replace('/\{>@' . $keyword . '\}/', $contents, $template);
+	}
+
 	public function resolveView($path) {
 		$out = file_get_contents($path);
 
-		$out = preg_replace('/\[@([^\]]+)\]/', '<?php echo \$$1; ?>', $out);
+		$out = preg_replace('/\{@([^\}]+)\}/', '<?php echo \$$1; ?>', $out);
 
 		return $out;
 	}

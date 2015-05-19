@@ -4,6 +4,9 @@
 	<meta charset="utf-8">
 	<link href="/css/layout.css" rel="stylesheet" type="text/css">
 	<link href="/css/wall.css" rel="stylesheet" type="text/css">
+
+	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
+	<script src="/js/post.js"></script>
 </head>
 
 <body>
@@ -17,7 +20,7 @@
 						|
 						<a href="/signup">Registrace</a>
 					<?php else: ?>
-						<span class="user_panel_username">[@user->username]</span><br />
+						<span class="user_panel_username">{@user->username}</span><br />
 						<a href="/logout">Logout</a>
 					<?php endif; ?>
 				</div>
@@ -26,10 +29,10 @@
 	</div>
 	<?php if(isset($flashes)): ?>
 		<?php foreach($flashes->getFlashMessages() as $f): ?>
-			<div class="flash flash-[@f->getType()]">
-				[@f->getText()]
+			<div class="flash flash-{@f->getType()}">
+				{@f->getText()}
 			</div>
 		<?php endforeach; ?>
 	<?php endif; ?>
-	[@contents]
+	{>@contents}
 </body>

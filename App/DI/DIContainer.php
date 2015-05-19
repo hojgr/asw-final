@@ -9,6 +9,7 @@ use App\Core\DI\DependencyInjectionContainer;
 use App\Model\DBUser;
 use App\Services\Auth;
 use App\Services\NSA;
+use App\Services\Wall;
 
 /**
  * Application specific DI container specifying
@@ -24,6 +25,15 @@ class DIContainer extends DependencyInjectionContainer {
 	protected $auth;
 
 	protected $nsa;
+
+	protected $wall;
+
+	public function getWall() {
+		if($this->wall === null)
+			$this->wall = new Wall($this->getDatabase());
+
+		return $this->wall;
+	}
 
 	public function getNSA() {
 		if($this->nsa === null)
