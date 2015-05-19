@@ -12,7 +12,7 @@
 			<div class="logo"></div>
 			<div class="user_panel">
 				<div class="user_panel_center">
-					<a href="#">Prihlasit se</a>
+					<a href="/login">Prihlasit se</a>
 					|
 					<a href="/signup">Zaregistrovat se</a>
 				</div>

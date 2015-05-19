@@ -37,4 +37,8 @@ class AccountController extends Controller {
 
 		return $this->respond(new RedirectResponse("/"));
 	}
+
+	public function login() {
+		return $this->respond(new ViewResponse("Account/login"));
+	}
 }
