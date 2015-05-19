@@ -21,8 +21,10 @@ class RequestHandler {
 	}
 
 	public function handle(Request $request, Route $route) {
+		$session = $this->dic->getSession();
+
 		$reflection = new \ReflectionClass($route->getController());
-		$controller = $reflection->newInstance();
+		$controller = $reflection->newInstance($session);
 
 		/**
 		 * @var $response ViewResponse|TextResponse
@@ -32,6 +34,20 @@ class RequestHandler {
 		if($response instanceof TextResponse) {
 			echo $response->getContents();
 		} else {
+			$new_flashes = null;
+			$old_flashes = null;
+
+			if($session->exists("fw_old_flashes")) {
+				$old_flashes = $session->getSession("fw_old_flashes");
+				$response->getView()->setVariable("flashes", $old_flashes);
+				$session->removeSession("fw_old_flashes");
+			}
+
+			if($session->exists("fw_new_flashes")) {
+				$new_flashes = $session->getSession("fw_new_flashes");
+				$session->setSession("fw_old_flashes", $new_flashes);
+				$session->removeSession("fw_new_flashes");
+			}
 
 			foreach($controller->viewVariables as $k => $v) {
 				$response->getView()->setVariable($k, $v);
@@ -40,6 +56,7 @@ class RequestHandler {
 			$viewResolver = $this->dic->getViewResolver();
 			$html = $viewResolver->getHTML($response->getView());
 			echo $html;
+
 		}
 	}
 }

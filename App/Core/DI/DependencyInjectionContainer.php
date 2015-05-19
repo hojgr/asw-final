@@ -6,6 +6,7 @@ namespace App\Core\DI;
 use App\Core\Request\RequestHandler;
 use App\Core\Routing\Router;
 use App\Core\Runtime;
+use App\Core\Session\Session;
 use App\Core\Templating\ViewResolver;
 
 /**
@@ -15,6 +16,12 @@ use App\Core\Templating\ViewResolver;
  * @package App\Core\DI
  */
 abstract class DependencyInjectionContainer {
+
+	/**
+	 * @var Session
+	 */
+	protected $session;
+
 	/**
 	 * Returns the top most class in object hierarchy
 	 *
@@ -43,5 +50,12 @@ abstract class DependencyInjectionContainer {
 
 	public function getRuntime() {
 		return new Runtime($this->getTopInstance(), $this->getRequestHandler());
+	}
+
+	public function getSession() {
+		if($this->session === null)
+			$this->session = new Session();
+
+		return $this->session;
 	}
 }

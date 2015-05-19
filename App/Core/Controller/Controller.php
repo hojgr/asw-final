@@ -5,6 +5,7 @@ namespace App\Core\Controller;
 
 
 use App\Core\FlashMessaging\FlashMessageBag;
+use App\Core\Session\Session;
 
 class Controller {
 
@@ -19,12 +20,19 @@ class Controller {
 	/**
 	 * @var FlashMessageBag
 	 */
-	protected $flashMessages;
+	public $flashMessages;
 
-	public function __construct() {
+	/**
+	 * @var Session
+	 */
+	protected $session;
+
+	public function __construct(Session $session) {
 		$this->saveRequestVariables($_GET, $this->_GET);
 		$this->saveRequestVariables($_POST, $this->_POST);
 		$this->initializeFlashBag();
+
+		$this->session = $session;
 	}
 
 	/**
@@ -40,8 +48,6 @@ class Controller {
 		$destination = $source;
 	}
 
-
-
 	protected function getPost($key)
 	{
 		return $this->_POST[$key];
@@ -54,10 +60,23 @@ class Controller {
 	private function initializeFlashBag()
 	{
 		$this->flashMessages = new FlashMessageBag();
-		$this->viewVariables['flashes'] = &$this->flashMessages;
 	}
 
 	protected function sendFlashMessage($text, $type = 'success') {
 		$this->flashMessages->addMessage($type, $text);
+	}
+
+	/**
+	 * Packs things up
+	 */
+	private function pack() {
+		$this->session->setSession("fw_new_flashes", $this->flashMessages);
+	}
+
+	protected function respond($response) {
+
+		$this->pack();
+
+		return $response;
 	}
 }
