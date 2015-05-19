@@ -10,7 +10,7 @@
 	<div style="clear: both"></div>
 
 	<?php foreach($posts as $post): ?>
-		<div class="post">
+		<div class="post" data-id="{@post->id}">
 			<div class="user_info">
 				<div class="avatar">
 					<img src="http://i.imgur.com/EoBUlwq.png" />
