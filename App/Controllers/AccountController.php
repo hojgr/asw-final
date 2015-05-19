@@ -10,7 +10,7 @@ use App\Core\Response\ViewResponse;
 
 class AccountController extends Controller {
 	public function register() {
-		return new ViewResponse("Account/register");
+		return $this->respond(new ViewResponse("Account/register"));
 	}
 
 	public function registerPost() {
