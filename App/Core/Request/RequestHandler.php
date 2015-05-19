@@ -5,6 +5,8 @@ namespace App\Core\Request;
 
 
 use App\Core\DI\DependencyInjectionContainer;
+use App\Core\FlashMessaging\FlashMessageBag;
+use App\Core\Response\RedirectResponse;
 use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
 use App\Core\Routing\Route;
@@ -29,12 +31,15 @@ class RequestHandler {
 		$controller = $reflection->newInstance($session);
 
 		/**
-		 * @var $response ViewResponse|TextResponse
+		 * @var $response ViewResponse|TextResponse|RedirectResponse
 		 */
 		$response = call_user_func_array([$controller, $route->getAction()], $route->parseParameters($request->getPath()));
 
 		if($response instanceof TextResponse) {
 			echo $response->getContents();
+		} elseif($response instanceof RedirectResponse) {
+			$this->concatenateFlashes($session);
+			header("Location: " . $response->getLocation());
 		} else {
 
 			$this->processFlashes($response->getView(), $session);
@@ -48,6 +53,23 @@ class RequestHandler {
 			echo $html;
 
 		}
+	}
+
+	public function concatenateFlashes(Session $session) {
+		if($session->exists("fw_old_flashes") && $session->exists("fw_new_flashes")) {
+			/**
+			 * @var $oldFlashes FlashMessageBag
+			 */
+			$oldFlashes = $session->getSession("fw_old_flashes");
+
+			$oldFlashes->concat($session->getSession("fw_new_flashes"));
+
+			$session->setSession("fw_old_flashes", $oldFlashes);
+		} else if($session->exists("fw_new_flashes")) {
+			$session->setSession("fw_old_flashes", $session->getSession("fw_new_flashes"));
+		}
+
+		$session->removeSession("fw_new_flashes");
 	}
 
 	public function processFlashes(View $view, Session $session) {

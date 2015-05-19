@@ -18,4 +18,10 @@ class FlashMessageBag {
 	public function addMessage($type, $text) {
 		$this->addFlashMessage(new FlashMessage($type, $text));
 	}
+
+	public function concat(FlashMessageBag $bag) {
+		foreach($bag->getFlashMessages() as $mess) {
+			$this->flashes[] = $mess;
+		}
+	}
 }
