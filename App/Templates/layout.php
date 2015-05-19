@@ -21,8 +21,8 @@
 	</div>
 	<?php if(isset($flashes)): ?>
 		<?php foreach($flashes->getFlashMessages() as $f): ?>
-			<div class="flash flash-<?= $f->getType(); ?>">
-				<?= $f->getText(); ?>
+			<div class="flash flash-[@f->getType()]">
+				[@f->getText()]
 			</div>
 		<?php endforeach; ?>
 	<?php endif; ?>
