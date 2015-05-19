@@ -22,9 +22,11 @@ class ViewResolver {
 	}
 
 	public function getHTML(View $view) {
-		$action = $this->resolveView($this->templateBasePath . $view->getPath() . ".php", $view->getVariables());
-		$template = $this->resolveView($this->templateBasePath . $this->layout, $view->getVariables() + ['contents' => $action]);
+		$action = $this->resolveView($this->templateBasePath . $view->getPath() . ".php");
+		$template = $this->resolveView($this->templateBasePath . $this->layout);
 		$variables = "";
+
+		$view->setVariable("contents", $action);
 
 		/**
 		 * Serializes and encodes serialized string into base64
@@ -41,17 +43,10 @@ class ViewResolver {
 		return ob_get_clean();
 	}
 
-	public function resolveView($path, $variables) {
+	public function resolveView($path) {
 		$out = file_get_contents($path);
 
-		foreach($variables as $k => $v) {
-			if(is_array($v)) $v = json_encode($v);
-
-			// if not scalar, can't be printed
-			if(!is_scalar($v))
-				continue;
-			$out = str_replace("[@" . $k . "]", $v, $out);
-		}
+		$out = preg_replace('/\[@([^\]]+)\]/', '<?php echo \$$1; ?>', $out);
 
 		return $out;
 	}
