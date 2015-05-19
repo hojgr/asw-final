@@ -1,4 +1,5 @@
 <div class="center white_body content_body narrow_body">
+	<h1>Registrace</h1>
 	<form action="/signupPost" method="POST">
 		<table class="table">
 			<tr>
