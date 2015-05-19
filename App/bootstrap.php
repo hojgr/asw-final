@@ -1,9 +1,10 @@
 <?php
-session_start();
 
 include 'Core/Autoloader/ClassLoader.php';
 $autoloader = new \App\Core\Autoloader\ClassLoader(null, '..');
 $autoloader->register();
+
+session_start();
 
 $dic = new \App\DI\DIContainer();
 
