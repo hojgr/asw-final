@@ -5,3 +5,5 @@ POST        /signupPost         App\Controllers\AccountController::registerPost
 
 GET         /login              App\Controllers\AccountController::login
 POST        /loginPost          App\Controllers\AccountController::loginPost
+
+GET         /logout             App\Controllers\AccountController::logout

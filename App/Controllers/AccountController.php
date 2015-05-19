@@ -70,4 +70,10 @@ class AccountController extends Controller {
 		$this->sendFlashMessage("Prihlaseni probehlo uspesne!");
 		return $this->respond(new RedirectResponse("/"));
 	}
+
+	public function logout() {
+		$this->dic->getAuth()->logout();
+
+		return $this->respond(new RedirectResponse("/"));
+	}
 }
