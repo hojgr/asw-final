@@ -13,6 +13,15 @@ class WallController extends BaseController {
 
 		$this->dic->getWall()->create($user->id, $text);
 
-		return $this->respond(new TextResponse("200"));
+		return $this->respond(new TextResponse("200 post"));
+	}
+
+	public function reply() {
+		$user = $this->dic->getAuth()->getUser();
+		$text = $this->getPost("text");
+		$parent = $this->getPost('parent');
+		$this->dic->getWall()->createReply($user->id, $parent, $text);
+
+		return $this->respond(new TextResponse("200 reply"));
 	}
 }

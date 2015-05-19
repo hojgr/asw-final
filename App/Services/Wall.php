@@ -53,11 +53,11 @@ class Wall {
 	public function getReplies(Contribution $contrib) {
 		$replies = [];
 
-		foreach($this->getContributions($contrib->id) as $reply) {
+		foreach($this->getContributions("ASC", $contrib->id) as $reply) {
 			$r = new Reply();
 			$r->id = $reply['id'];
 			$r->text = $reply['text'];
-			$r->postedAt = date("d.m.Y H:i:s", strtotime($post['posted_at']));
+			$r->postedAt = date("d.m.Y H:i:s", strtotime($reply['posted_at']));
 			$r->author = $reply['username'];
 			$r->parent = $contrib;
 
@@ -67,18 +67,31 @@ class Wall {
 		return $replies;
 	}
 
-	public function getContributions($post_id = null) {
+	public function getContributions($sorting = "DESC", $post_id = null) {
 		$statement = $this->db->getConnection()->prepare(
 			"
 		SELECT contributions.id, contributions.posted_at, contributions.text, users.username
 		FROM contributions
 		 LEFT JOIN users ON users.id = contributions.user_id
 		WHERE contribution_id " . ($post_id === null ? 'IS NULL' : '= \'' . $post_id . '\'') ."
-		ORDER BY id DESC"
+		ORDER BY id " . $sorting
 		);
 
 		$statement->execute();
 
 		return $statement->fetchAll(\PDO::FETCH_ASSOC);
+	}
+
+	public function createReply($user_id, $parent, $text)
+	{
+		$statement = $this->db->getConnection()->prepare("
+		INSERT INTO contributions
+		(user_id, contribution_id, text, posted_at) VALUES (:uid, :cid, :text, NOW())");
+
+		$statement->bindParam("uid", $user_id);
+		$statement->bindParam("cid", $parent);
+		$statement->bindParam("text", $text);
+
+		$statement->execute();
 	}
 }

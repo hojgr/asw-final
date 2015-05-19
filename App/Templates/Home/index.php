@@ -27,18 +27,12 @@
 				<div class="separator"></div>
 				<?php if(count($post->replies) > 0): ?>
 					<div class="replies">
-						<div class="reply">
-							<div class="reply_heading">James Bond (pred hodinou)</div>
-							<div class="reply_text">Zajimave...</div>
-						</div>
-						<div class="reply">
-							<div class="reply_heading">James Bond (pred hodinou)</div>
-							<div class="reply_text">Zajimave...</div>
-						</div>
-						<div class="reply">
-							<div class="reply_heading">James Bond (pred hodinou)</div>
-							<div class="reply_text">Zajimave...</div>
-						</div>
+						<?php foreach($post->replies as $reply): ?>
+							<div class="reply">
+								<div class="reply_heading">{@reply->author} ({@reply->postedAt})</div>
+								<div class="reply_text">{@reply->text}</div>
+							</div>
+						<?php endforeach; ?>
 					</div>
 				<?php endif; ?>
 				<div class="write_reply">

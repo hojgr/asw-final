@@ -6,7 +6,7 @@
 	<link href="/css/wall.css" rel="stylesheet" type="text/css">
 
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="/js/post.js"></script>
+	<script src="/js/wall.js"></script>
 </head>
 
 <body>
