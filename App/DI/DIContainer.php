@@ -8,6 +8,7 @@ namespace App\DI;
 use App\Core\DI\DependencyInjectionContainer;
 use App\Model\DBUser;
 use App\Services\Auth;
+use App\Services\NSA;
 
 /**
  * Application specific DI container specifying
@@ -21,6 +22,15 @@ class DIContainer extends DependencyInjectionContainer {
 	protected $db_user;
 
 	protected $auth;
+
+	protected $nsa;
+
+	public function getNSA() {
+		if($this->nsa === null)
+			$this->nsa = new NSA($this->getDatabase());
+
+		return $this->nsa;
+	}
 
 	public function getAuth() {
 		if($this->auth === null)

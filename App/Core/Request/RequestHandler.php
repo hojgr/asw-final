@@ -30,6 +30,8 @@ class RequestHandler {
 		$reflection = new \ReflectionClass($route->getController());
 		$controller = $reflection->newInstance($this->dic, $session);
 
+		$controller->startup();
+
 		/**
 		 * @var $response ViewResponse|TextResponse|RedirectResponse
 		 */

@@ -4,11 +4,10 @@
 namespace App\Controllers;
 
 
-use App\Core\Controller\Controller;
 use App\Core\Response\RedirectResponse;
 use App\Core\Response\ViewResponse;
 
-class AccountController extends Controller {
+class AccountController extends BaseController {
 	public function register() {
 		return $this->respond(new ViewResponse("Account/register"));
 	}

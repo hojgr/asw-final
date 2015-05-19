@@ -43,6 +43,13 @@ class Controller {
 	}
 
 	/**
+	 * Is called upon controller instantiation
+	 */
+	public function startup() {
+
+	}
+
+	/**
 	 * Can't dynamically construct $_GET
 	 * with variable variables.
 	 * @see http://php.net/manual/en/language.variables.variable.php
