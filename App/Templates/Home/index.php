@@ -42,7 +42,7 @@
 					</div>
 				<?php endif; ?>
 				<div class="write_reply">
-					<input class="reply_input" type="text" placeholder="Napiste reakci" />
+					<input class="reply_input" data-parent="{@post->id}" type="text" placeholder="Napiste reakci" />
 				</div>
 			</div>
 		</div>
