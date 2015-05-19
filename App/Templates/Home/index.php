@@ -35,9 +35,12 @@
 						<?php endforeach; ?>
 					</div>
 				<?php endif; ?>
+
+				<?php if($user !== null): ?>
 				<div class="write_reply">
 					<input class="reply_input" data-parent="{@post->id}" type="text" placeholder="Napiste reakci" />
 				</div>
+				<?php endif; ?>
 			</div>
 		</div>
 
