@@ -37,6 +37,6 @@ class Request {
 	 */
 	public function setPath($path)
 	{
-		$this->path = $path;
+		$this->path = preg_replace("/\\?.*$/", "", $path);
 	}
 }
