@@ -9,7 +9,7 @@
 <body>
 	<div class="header">
 		<div class="center">
-			<div class="logo"></div>
+			<a href="/"><div class="logo"></div></a>
 			<div class="user_panel">
 				<div class="user_panel_center">
 					<a href="/login">Přihlášení</a>
