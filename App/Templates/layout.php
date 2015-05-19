@@ -14,7 +14,7 @@
 				<div class="user_panel_center">
 					<a href="#">Prihlasit se</a>
 					|
-					<a href="#">Zaregistrovat se</a>
+					<a href="/signup">Zaregistrovat se</a>
 				</div>
 			</div>
 		</div>

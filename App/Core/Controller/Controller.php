@@ -4,8 +4,10 @@
 namespace App\Core\Controller;
 
 
+use App\Core\DI\DependencyInjectionContainer;
 use App\Core\FlashMessaging\FlashMessageBag;
 use App\Core\Session\Session;
+use App\DI\DIContainer;
 
 class Controller {
 
@@ -26,13 +28,18 @@ class Controller {
 	 * @var Session
 	 */
 	protected $session;
+	/**
+	 * @var DIContainer
+	 */
+	public $dic;
 
-	public function __construct(Session $session) {
+	public function __construct(DependencyInjectionContainer $dic, Session $session) {
 		$this->saveRequestVariables($_GET, $this->_GET);
 		$this->saveRequestVariables($_POST, $this->_POST);
 		$this->initializeFlashBag();
 
 		$this->session = $session;
+		$this->dic = $dic;
 	}
 
 	/**

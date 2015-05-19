@@ -28,7 +28,7 @@ class RequestHandler {
 		$session = $this->dic->getSession();
 
 		$reflection = new \ReflectionClass($route->getController());
-		$controller = $reflection->newInstance($session);
+		$controller = $reflection->newInstance($this->dic, $session);
 
 		/**
 		 * @var $response ViewResponse|TextResponse|RedirectResponse

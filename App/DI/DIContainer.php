@@ -6,6 +6,7 @@ namespace App\DI;
 
 
 use App\Core\DI\DependencyInjectionContainer;
+use App\Model\DBUser;
 
 /**
  * Application specific DI container specifying
@@ -15,6 +16,16 @@ use App\Core\DI\DependencyInjectionContainer;
  * @package App\DI
  */
 class DIContainer extends DependencyInjectionContainer {
+
+	protected $db_user;
+
+	public function getDBUser() {
+		if($this->db_user === null)
+			$this->db_user = new DBUser($this->getDatabase());
+
+		return $this->db_user;
+	}
+
 	public function getConfigFileContents($path_appendix) {
 		return file_get_contents($this->getConfigFilePath($path_appendix));
 	}

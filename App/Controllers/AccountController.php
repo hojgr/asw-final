@@ -6,7 +6,6 @@ namespace App\Controllers;
 
 use App\Core\Controller\Controller;
 use App\Core\Response\RedirectResponse;
-use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
 
 class AccountController extends Controller {
@@ -26,6 +25,14 @@ class AccountController extends Controller {
 			return $this->respond(new RedirectResponse("/signup"));
 		}
 
+		$dbu = $this->dic->getDBUser();
+
+		if($dbu->isUsernameTaken($this->getPost("username"))) {
+			$this->sendFlashMessage("Uzivatelske jmeno je zabrane!", "error");
+			return $this->respond(new RedirectResponse("/signup"));
+		}
+
+		$dbu->createUser($this->getPost("username"), $this->getPost("password"));
 		$this->sendFlashMessage("Registrace probehla uspesne.");
 
 		return $this->respond(new RedirectResponse("/"));

@@ -3,6 +3,7 @@
 
 namespace App\Core\DI;
 
+use App\Core\Database\Database;
 use App\Core\Request\RequestHandler;
 use App\Core\Routing\Router;
 use App\Core\Runtime;
@@ -21,6 +22,8 @@ abstract class DependencyInjectionContainer {
 	 * @var Session
 	 */
 	protected $session;
+
+	protected $database;
 
 	/**
 	 * Returns the top most class in object hierarchy
@@ -57,5 +60,12 @@ abstract class DependencyInjectionContainer {
 			$this->session = new Session();
 
 		return $this->session;
+	}
+
+	public function getDatabase() {
+		if($this->database === null)
+			$this->database = new Database("localhost", "root", "", "asw");
+
+		return $this->database;
 	}
 }
