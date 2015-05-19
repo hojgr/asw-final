@@ -4,3 +4,4 @@ GET         /signup             App\Controllers\AccountController::register
 POST        /signupPost         App\Controllers\AccountController::registerPost
 
 GET         /login              App\Controllers\AccountController::login
+POST        /loginPost          App\Controllers\AccountController::loginPost

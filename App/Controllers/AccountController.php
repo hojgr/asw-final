@@ -41,4 +41,33 @@ class AccountController extends Controller {
 	public function login() {
 		return $this->respond(new ViewResponse("Account/login"));
 	}
+
+	public function loginPost() {
+		if($this->getPost("username") == "") {
+			$this->sendFlashMessage("Musite zadat uzivatelske jmeno!", "error");
+			return $this->respond(new RedirectResponse("/login"));
+		}
+
+		if($this->getPost("password") == "") {
+			$this->sendFlashMessage("Musite zadat heslo!", "error");
+			return $this->respond(new RedirectResponse("/login"));
+		}
+
+		$dbu = $this->dic->getDBUser();
+
+		$user = $dbu->findByUsername($this->getPost("username"));
+
+		if($user === false) {
+			$this->sendFlashMessage("Zadany uzivatel neexistuje!", "error");
+			return $this->respond(new RedirectResponse("/login"));
+		} if($user->password !== md5($this->getPost("password"))) {
+			$this->sendFlashMessage("Nespravne heslo!", "error");
+			return $this->respond(new RedirectResponse("/login"));
+		}
+
+		$this->dic->getAuth()->auth($user);
+
+		$this->sendFlashMessage("Prihlaseni probehlo uspesne!");
+		return $this->respond(new RedirectResponse("/"));
+	}
 }

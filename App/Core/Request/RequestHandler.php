@@ -48,6 +48,8 @@ class RequestHandler {
 				$response->getView()->setVariable($k, $v);
 			}
 
+			$response->getView()->setVariable("user", $this->dic->getAuth()->getUser());
+
 			$viewResolver = $this->dic->getViewResolver();
 			$html = $viewResolver->getHTML($response->getView());
 			echo $html;

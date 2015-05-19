@@ -7,6 +7,7 @@ namespace App\DI;
 
 use App\Core\DI\DependencyInjectionContainer;
 use App\Model\DBUser;
+use App\Services\Auth;
 
 /**
  * Application specific DI container specifying
@@ -18,6 +19,15 @@ use App\Model\DBUser;
 class DIContainer extends DependencyInjectionContainer {
 
 	protected $db_user;
+
+	protected $auth;
+
+	public function getAuth() {
+		if($this->auth === null)
+			$this->auth = new Auth($this->getSession());
+
+		return $this->auth;
+	}
 
 	public function getDBUser() {
 		if($this->db_user === null)

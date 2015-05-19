@@ -153,3 +153,9 @@ input[type=text]:focus, input[type=password]:focus, textarea:focus {
     color: white;
     background: red;
 }
+
+.user_panel_username {
+    font-size: 30px;
+    position: relative;
+    bottom: 20px;
+}

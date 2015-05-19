@@ -12,9 +12,14 @@
 			<a href="/"><div class="logo"></div></a>
 			<div class="user_panel">
 				<div class="user_panel_center">
-					<a href="/login">Přihlášení</a>
-					|
-					<a href="/signup">Registrace</a>
+					<?php if(!$user): ?>
+						<a href="/login">Přihlášení</a>
+						|
+						<a href="/signup">Registrace</a>
+					<?php else: ?>
+						<span class="user_panel_username">[@user->username]</span><br />
+						<a href="/logout">Logout</a>
+					<?php endif; ?>
 				</div>
 			</div>
 		</div>

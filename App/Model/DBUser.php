@@ -46,4 +46,24 @@ class DBUser {
 
 		return $q > 0;
 	}
+
+	public function findByUsername($username) {
+		$statement = $this->db->getConnection()->prepare("SELECT * FROM users WHERE username = :username");
+		$statement->bindParam("username", $username);
+
+		$statement->execute();
+
+		$q = $statement->fetch(\PDO::FETCH_ASSOC);
+
+		if($q === false)
+			return false;
+
+		$user = new User();
+
+		foreach(['id', 'username', 'password', 'blocked', 'admin_level', 'registered_at'] as $thing) {
+			$user->$thing = $q[$thing];
+		}
+
+		return $user;
+	}
 }
