@@ -76,8 +76,8 @@ class Runtime {
 			return $this->requestInstance;
 
 		$request = new Request();
-		$request->path = $_SERVER['REQUEST_URI'];
-		$request->method = $_SERVER['REQUEST_METHOD'];
+		$request->setPath($_SERVER['REQUEST_URI']);
+		$request->setMethod($_SERVER['REQUEST_METHOD']);
 
 		$this->requestInstance = $request;
 

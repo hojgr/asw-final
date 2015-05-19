@@ -13,7 +13,7 @@ $(document).ready(function() {
 		}
 	});
 
-	$(".reply_input").keypress(function(e) {
+	$(document).on("keypress", ".reply_input", function(e) {
 		if(e.which == 13) {
 			var inp = $(this);
 			var contents = inp.val();
@@ -30,4 +30,35 @@ $(document).ready(function() {
 			}
 		}
 	});
+
+	function loadNewPosts() {
+
+		var firstPost = $(".post").first();
+
+		var lastPostId = firstPost.attr("data-id");
+		$.get("/wall/posts", {last: lastPostId}, function(body) {
+			body = body.reverse();
+
+			for(var i in body) {
+				var contents = body[i];
+
+				var currentPost = $(firstPost).clone();
+				currentPost.find(".author").text(contents['author']);
+				currentPost.find(".time").text(contents['postedAt']);
+				console.log(currentPost.find(".text").text());
+				console.log("loaded > " + contents['text']);
+				currentPost.find(".text").text(contents['text']);
+				console.log(currentPost.find(".text").text());
+				currentPost.find('.replies').remove();
+				currentPost.attr('data-id', contents['id']);
+				currentPost.find('.reply_input').attr('data-parent', contents['id']);
+				firstPost.before(currentPost);
+				firstPost.before("<div style='clear: both'></div>");
+			}
+		});
+
+		setTimeout(loadNewPosts, 500);
+	}
+
+	setTimeout(loadNewPosts, 500);
 });

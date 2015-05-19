@@ -6,6 +6,7 @@ namespace App\Core\Request;
 
 use App\Core\DI\DependencyInjectionContainer;
 use App\Core\FlashMessaging\FlashMessageBag;
+use App\Core\Response\JsonResponse;
 use App\Core\Response\RedirectResponse;
 use App\Core\Response\TextResponse;
 use App\Core\Response\ViewResponse;
@@ -33,7 +34,7 @@ class RequestHandler {
 		$controller->startup();
 
 		/**
-		 * @var $response ViewResponse|TextResponse|RedirectResponse
+		 * @var $response ViewResponse|TextResponse|RedirectResponse|JsonResponse
 		 */
 		$response = call_user_func_array([$controller, $route->getAction()], $route->parseParameters($request->getPath()));
 
@@ -42,6 +43,9 @@ class RequestHandler {
 		} elseif($response instanceof RedirectResponse) {
 			$this->concatenateFlashes($session);
 			header("Location: " . $response->getLocation());
+		} elseif($response instanceof JsonResponse) {
+			header('Content-Type: application/json');
+			echo $response->getJson();
 		} else {
 
 			$this->processFlashes($response->getView(), $session);

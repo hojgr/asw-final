@@ -4,6 +4,7 @@
 namespace App\Controllers;
 
 
+use App\Core\Response\JsonResponse;
 use App\Core\Response\TextResponse;
 
 class WallController extends BaseController {
@@ -23,5 +24,9 @@ class WallController extends BaseController {
 		$this->dic->getWall()->createReply($user->id, $parent, $text);
 
 		return $this->respond(new TextResponse("200 reply"));
+	}
+
+	public function getPosts() {
+		return $this->respond(new JsonResponse($this->dic->getWall()->getPostsAfter($this->getGet("last"))));
 	}
 }

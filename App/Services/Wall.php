@@ -94,4 +94,33 @@ class Wall {
 
 		$statement->execute();
 	}
+
+	public function getPostsAfter($id)
+	{
+		$return = [];
+
+		$statement = $this->db->getConnection()->prepare(
+			"
+		SELECT contributions.id, contributions.posted_at, contributions.text, users.username
+		FROM contributions
+		 LEFT JOIN users ON users.id = contributions.user_id
+		WHERE contributions.id > :id AND contributions.contribution_id IS NULL
+		ORDER BY id DESC"
+		);
+		$statement->bindParam("id", $id);
+		$statement->execute();
+
+		$posts = $statement->fetchAll(\PDO::FETCH_ASSOC);
+
+		foreach($posts as $post) {
+			$return[] = [
+				"id" => $post['id'],
+				"text" => $post['text'],
+				"author" => $post['username'],
+				"postedAt" => date("d.m.Y H:i:s", strtotime($post['posted_at']))
+			];
+		}
+
+		return $return;
+	}
 }
