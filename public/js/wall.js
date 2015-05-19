@@ -5,9 +5,10 @@ $(document).ready(function() {
 		if(contents.val().length == 0) {
 			alert("Musite zadat text!");
 		} else {
-			contents.attr("disabled", "disabled");
+			contents.prop("disabled", true);
 			$.post("/wall/post", { text: contents.val() } , function() {
 				contents.val("");
+				contents.prop("disabled", false);
 			});
 		}
 	});
