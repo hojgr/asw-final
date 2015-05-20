@@ -27,6 +27,7 @@ class WallController extends BaseController {
 	}
 
 	public function getPosts() {
-		return $this->respond(new JsonResponse($this->dic->getWall()->getPostsAfter($this->getGet("last"))));
+		return $this->respond(new JsonResponse($this->dic->getWall()->getPosts()));
 	}
+
 }

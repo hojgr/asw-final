@@ -36,13 +36,13 @@ class Wall {
 		$contribs = [];
 
 		foreach($this->getContributions() as $post) {
-			$c = new Contribution();
-			$c->id = $post['id'];
-			$c->author = $post['username'];
-			$c->postedAt = date("d.m.Y H:i:s", strtotime($post['posted_at']));
-			$c->text = $post['text'];
+			$c = [];
+			$c['id'] = $post['id'];
+			$c['author'] = $post['username'];
+			$c['postedAt'] = date("d.m.Y H:i:s", strtotime($post['posted_at']));
+			$c['text'] = $post['text'];
 
-			$c->replies = $this->getReplies($c);
+			$c['replies'] = $this->getReplies($c);
 
 			$contribs[] = $c;
 		}
@@ -50,16 +50,16 @@ class Wall {
 		return $contribs;
 	}
 
-	public function getReplies(Contribution $contrib) {
+	public function getReplies(array $contrib) {
 		$replies = [];
 
-		foreach($this->getContributions("ASC", $contrib->id) as $reply) {
-			$r = new Reply();
-			$r->id = $reply['id'];
-			$r->text = $reply['text'];
-			$r->postedAt = date("d.m.Y H:i:s", strtotime($reply['posted_at']));
-			$r->author = $reply['username'];
-			$r->parent = $contrib;
+		foreach($this->getContributions("ASC", $contrib['id']) as $reply) {
+			$r = [];
+			$r['id'] = $reply['id'];
+			$r['text'] = $reply['text'];
+			$r['postedAt'] = date("d.m.Y H:i:s", strtotime($reply['posted_at']));
+			$r['author'] = $reply['username'];
+			$r['parent'] = $contrib;
 
 			$replies[] = $r;
 		}
@@ -95,32 +95,4 @@ class Wall {
 		$statement->execute();
 	}
 
-	public function getPostsAfter($id)
-	{
-		$return = [];
-
-		$statement = $this->db->getConnection()->prepare(
-			"
-		SELECT contributions.id, contributions.posted_at, contributions.text, users.username
-		FROM contributions
-		 LEFT JOIN users ON users.id = contributions.user_id
-		WHERE contributions.id > :id AND contributions.contribution_id IS NULL
-		ORDER BY id DESC"
-		);
-		$statement->bindParam("id", $id);
-		$statement->execute();
-
-		$posts = $statement->fetchAll(\PDO::FETCH_ASSOC);
-
-		foreach($posts as $post) {
-			$return[] = [
-				"id" => $post['id'],
-				"text" => $post['text'],
-				"author" => $post['username'],
-				"postedAt" => date("d.m.Y H:i:s", strtotime($post['posted_at']))
-			];
-		}
-
-		return $return;
-	}
 }
