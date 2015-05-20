@@ -39,14 +39,16 @@ $(document).ready(function() {
 	});
 
 	function textify(text) {
+		text = text.replace(/(https?:\/\/[^\)\(\]\[ ]+)/, "<a href='$1'>$1</a>");
 
+		return text;
 	}
 
 	function createReply(id, author, postedAt, text) {
 		var contents = '';
 		contents += '			<div class="reply" data-reply-id="' + id + '">';
 		contents += '				<div class="reply_heading">' + author + '(' + postedAt + ')</div>';
-		contents += '				<div class="reply_text">' + text + '</div>';
+		contents += '				<div class="reply_text">' + textify(text) + '</div>';
 		contents += '			</div>';
 		return contents;
 	}
@@ -66,7 +68,7 @@ $(document).ready(function() {
 		contents += '	</div>';
 		contents += '	<div class="post_contents">';
 		contents += '		<div class="text">';
-		contents += '			' + text + '';
+		contents += '			' + textify(text) + '';
 		contents += '		</div>';
 		contents += '		<div class="separator"></div>';
 		contents += '		<div class="replies">';

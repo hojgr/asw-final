@@ -108,3 +108,8 @@
     -webkit-box-shadow: 0 0 0 5px #A0785A, 1px 1px 4px 6px transparent;
     -o-box-shadow: 0 0 0 5px #A0785A, 1px 1px 4px 6px transparent;
 }
+
+.post a {
+    color: black;
+    text-decoration: underline;
+}
