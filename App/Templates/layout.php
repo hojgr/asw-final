@@ -30,7 +30,19 @@
 		</div>
 	</div>
 	<?php if(isset($flashes)): ?>
-		<?php foreach($flashes->getFlashMessages() as $f): ?>
+		<?php
+			$af = $flashes->getFlashMessages();
+			$forbidden = [];
+			$af = array_filter($af, function($in) use ($forbidden) {
+				if(!in_array($in->getText(), $forbidden)) {
+					$forbidden[] = $in->getText();
+
+					return true;
+				}
+				return false;
+			});
+		?>
+		<?php foreach($af as $f): ?>
 			<div class="flash flash-{@f->getType()}">
 				{@f->getText()}
 			</div>
