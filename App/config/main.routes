@@ -12,3 +12,5 @@ POST        /wall/post          App\Controllers\WallController::post
 GET         /wall/posts         App\Controllers\WallController::getPosts
 
 POST        /wall/reply         App\Controllers\WallController::reply
+
+GET         /profile            App\Controllers\ProfileController::index
