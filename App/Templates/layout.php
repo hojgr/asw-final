@@ -6,7 +6,6 @@
 	<link href="/css/wall.css" rel="stylesheet" type="text/css">
 
 	<script src="http://code.jquery.com/jquery-2.1.4.min.js"></script>
-	<script src="/js/wall.js"></script>
 	<script>
 		var loggedIn = <?php echo ($user ? "true" : "false"); ?>;
 	</script>

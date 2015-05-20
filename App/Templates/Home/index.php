@@ -1,5 +1,6 @@
 <div class="center">
 
+	<script src="/js/wall.js"></script>
 	<?php if($user !== null): ?>
 		<div class="post-write">
 			<button id="post" class="chamoiseeBtn generalBtn">Odeslat</button>
