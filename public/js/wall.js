@@ -1,3 +1,4 @@
+var timeout = null;
 $(document).ready(function() {
 	$("#post").click(function() {
 		var contents = $("#postContent");
@@ -9,6 +10,7 @@ $(document).ready(function() {
 			$.post("/wall/post", { text: contents.val() } , function() {
 				contents.val("");
 				contents.prop("disabled", false);
+				clearTimeout(timeout);
 				loadContents();
 			});
 		}
@@ -28,12 +30,17 @@ $(document).ready(function() {
 					inp.val("");
 					inp.prop("disabled", false);
 					setTimeout(function() {
+						clearTimeout(timeout);
 						loadContents();
 					}, 50);
 				});
 			}
 		}
 	});
+
+	function textify(text) {
+
+	}
 
 	function createReply(id, author, postedAt, text) {
 		var contents = '';
@@ -121,7 +128,7 @@ $(document).ready(function() {
 			}
 		});
 
-		setTimeout(loadContents, 1000);
+		timeout = setTimeout(loadContents, 1000);
 	}
 
 	loadContents(true);
